@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NKwenkwelele</title>
+    <!-- <link rel="stylesheet" href="asset/css/account.css"> -->
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    color: #fff;
+}
+.form-container {
+    background: #fff;
+    padding: 40px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    width: 350px;
+    text-align: center;
+    color: #000;
+}
+.form-container h2 {
+    margin-bottom: 20px;
+    color: #000;
+}
+.form {
+    display: none;
+}
+.form.active {
+    display: block;
+}
+.input-group {
+    margin-bottom: 15px;
+    position: relative;
+}
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #000;
+    border-radius: 3px;
+    box-sizing: border-box;
+    font-size: 16px;
+    background-color: #fff;
+    color: #000;
+}
+.input-group input::placeholder {
+    color: #555;
+}
+.input-group input:focus {
+    outline: none;
+    border-color: #333;
+}
+.toggle-btn {
+    background: none;
+    border: none;
+    color: #000;
+    text-decoration: underline;
+    cursor: pointer;
+    margin-top: 15px;
+    font-size: 14px;
+}
+.toggle-btn:hover {
+    color: #333;
+}
+.submit-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+.submit-btn:hover {
+    background-color: #333;
+    color: #fff;
+}
+.error-message {
+    color: #dc3545;
+    font-size: 12px;
+    margin-top: 5px;
+    display: block;
+    text-align: left;
+}
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <div id="login-form" class="form active">
+            <h2>Login</h2>
+            <form id="loginForm" action="/login" method="POST">
+                <div class="input-group">
+                    <input type="email" name="email" placeholder="Email" required>
+                    <span class="error-message"></span>
+                </div>
+                <div class="input-group">
+                    <input type="password" name="password" placeholder="Password" required>
+                    <span class="error-message"></span>
+                </div>
+                <button type="submit" class="submit-btn">Login</button>
+            </form>
+            <button class="toggle-btn" onclick="toggleForms()">Don't have an account? Register</button>
+        </div>
+        
+        <div id="register-form" class="form">
+            <h2>Register</h2>
+            <form id="registerForm" action="/register" method="POST">
+                <div class="input-group">
+                    <input type="text" name="full_name" placeholder="Username" required>
+                    <span class="error-message"></span>
+                </div>
+                <div class="input-group">
+                    <input type="email" name="email" placeholder="Email" required>
+                    <span class="error-message"></span>
+                </div>
+                <div class="input-group">
+                    <input type="password" name="password" placeholder="Password" required>
+                    <span class="error-message"></span>
+                </div>
+                <button type="submit" class="submit-btn">Register</button>
+            </form>
+            <button class="toggle-btn" onclick="toggleForms()">Already have an account? Login</button>
+        </div>
+    </div>
+
+    <script src="asset/js/account.js"></script>
+</body>
+</html>
