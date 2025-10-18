@@ -105,4 +105,3 @@ In config.php or connection.php, modify the credentials:
   📍 Malawi
   💼 Frontend & Web Developer
   📧 magomboanaclet@gmail.com
-  🔗 GitHub Profile
