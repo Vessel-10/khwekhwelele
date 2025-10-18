@@ -1,9 +1,6 @@
 <?php
 require_once 'connection.php';
-
 header('Content-Type: application/json');
-
-// Only allow POST requests
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode([
         "status" => "error", 
@@ -11,17 +8,12 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     ]);
     exit();
 }
-
 try {
     $db = new DatabaseConnection();
     $conn = $db->conn;
-    
-    // Get search parameters
     $origin = isset($_POST['origin']) ? trim($_POST['origin']) : '';
     $destination = isset($_POST['destination']) ? trim($_POST['destination']) : '';
     $travel_date = isset($_POST['date']) ? $_POST['date'] : '';
-    
-    // Validate input
     if (empty($origin) || empty($destination) || empty($travel_date)) {
         echo json_encode([
             "status" => "error",
@@ -29,12 +21,9 @@ try {
         ]);
         exit();
     }
-    
-    // Validate date format and ensure it's not in the past
     $search_date = DateTime::createFromFormat('Y-m-d', $travel_date);
     $today = new DateTime();
     $today->setTime(0, 0, 0);
-    
     if (!$search_date || $search_date < $today) {
         echo json_encode([
             "status" => "error",
@@ -42,8 +31,6 @@ try {
         ]);
         exit();
     }
-    
-    // Search for available buses
     $search_query = "
         SELECT DISTINCT
             s.schedule_ID,
@@ -78,12 +65,10 @@ try {
         AND (b.capacity - COALESCE(booked_seats.total_booked, 0)) > 0
         ORDER BY s.departure_time ASC
     ";
-    
     $stmt = $conn->prepare($search_query);
     $stmt->bind_param("sss", $travel_date, $origin, $destination);
     $stmt->execute();
     $result = $stmt->get_result();
-    
     $buses = [];
     while ($row = $result->fetch_assoc()) {
         $buses[] = [
@@ -101,44 +86,36 @@ try {
             'seats_left' => intval($row['seats_left'])
         ];
     }
-    
     if (empty($buses)) {
-        // Check if the route exists at all
         $route_check_query = "
             SELECT COUNT(*) as route_count 
             FROM routes 
             WHERE LOWER(origin) = LOWER(?) 
             AND LOWER(destination) = LOWER(?)
         ";
-        
         $route_stmt = $conn->prepare($route_check_query);
         $route_stmt->bind_param("ss", $origin, $destination);
         $route_stmt->execute();
         $route_result = $route_stmt->get_result();
         $route_data = $route_result->fetch_assoc();
-        
         if ($route_data['route_count'] == 0) {
-            // Check for reverse route
             $reverse_check_query = "
                 SELECT origin, destination 
                 FROM routes 
                 WHERE LOWER(origin) = LOWER(?) 
                 AND LOWER(destination) = LOWER(?)
                 LIMIT 1
-            ";
-            
+            ";            
             $reverse_stmt = $conn->prepare($reverse_check_query);
             $reverse_stmt->bind_param("ss", $destination, $origin);
             $reverse_stmt->execute();
-            $reverse_result = $reverse_stmt->get_result();
-            
+            $reverse_result = $reverse_stmt->get_result();            
             if ($reverse_result->num_rows > 0) {
                 $reverse_route = $reverse_result->fetch_assoc();
                 $suggestion = "Did you mean {$reverse_route['origin']} to {$reverse_route['destination']}?";
             } else {
                 $suggestion = "Please check the route names or contact support for assistance.";
-            }
-            
+            }       
             echo json_encode([
                 "status" => "success",
                 "message" => "No route found between {$origin} and {$destination}",
@@ -151,7 +128,6 @@ try {
                 ]
             ]);
         } else {
-            // Route exists but no buses available on this date
             echo json_encode([
                 "status" => "success",
                 "message" => "No buses available for the selected date",
@@ -165,7 +141,6 @@ try {
             ]);
         }
     } else {
-        // Return successful search results
         echo json_encode([
             "status" => "success",
             "message" => "Buses found successfully",
@@ -177,7 +152,6 @@ try {
             ]
         ]);
     }
-    
 } catch (Exception $e) {
     error_log("Search Error: " . $e->getMessage());
     echo json_encode([
