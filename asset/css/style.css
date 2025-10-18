@@ -1,18 +1,15 @@
-/* Reset */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Body */
 body {
     font-family: Arial, sans-serif;
     background: #111;
     color: #fff;
 }
 
-/* Navbar */
 nav {
     background: #222;
     border-bottom: 1px solid #333;
@@ -81,7 +78,6 @@ nav ul li a:hover {
     cursor: pointer;
 }
 
-/* Hero */
 .hero {
     height: 80vh;
     background: url('https://images.unsplash.com/photo-1529070538774-1843cb3265df?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
@@ -133,7 +129,6 @@ nav ul li a:hover {
     background: #e68a00;
 }
 
-/* Booking Section */
 .booking {
     width: 100%;
     padding: 2rem;
@@ -196,7 +191,6 @@ nav ul li a:hover {
     background: #e68a00;
 }
 
-/* Routes Section */
 .routes-section {
   padding: 60px 20px;
   background: #111;
@@ -277,7 +271,6 @@ nav ul li a:hover {
   font-weight: bold;
 }
 
-/* Notification System */
 .notification {
   position: fixed;
   top: 20px;
@@ -344,7 +337,6 @@ nav ul li a:hover {
   opacity: 1;
 }
 
-/* Base Modal Styles */
 .modal {
   position: fixed;
   z-index: 1000;
@@ -409,7 +401,6 @@ nav ul li a:hover {
   background: rgba(255, 153, 0, 0.2);
 }
 
-/* Bus Search Modal Styles */
 #busModal .modal-content {
   max-width: 1000px;
   width: 90%;
@@ -503,11 +494,6 @@ nav ul li a:hover {
   border-color: #ff9900;
   background: linear-gradient(135deg, #2a1f0f, #332818);
   animation: subtle-pulse 2s infinite;
-}
-
-@keyframes subtle-pulse {
-  0%, 100% { box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
-  50% { box-shadow: 0 4px 20px rgba(255, 153, 0, 0.3); }
 }
 
 .bus-header {
@@ -625,12 +611,6 @@ nav ul li a:hover {
   border-color: #ff9900;
 }
 
-@keyframes pulse {
-  0% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.8; transform: scale(1.05); }
-  100% { opacity: 1; transform: scale(1); }
-}
-
 .book-btn {
   width: 100%;
   padding: 15px;
@@ -707,7 +687,6 @@ nav ul li a:hover {
   border: 2px solid #ff6b6b;
 }
 
-/* Confirmation Modal Styles */
 #confirmModal .modal-content {
   max-width: 650px;
   width: 90%;
@@ -801,7 +780,6 @@ nav ul li a:hover {
   box-shadow: 0 5px 15px rgba(255, 153, 0, 0.4);
 }
 
-/* Booking Modal Styles */
 #bookingModal .modal-content {
   max-width: 750px;
   width: 90%;
@@ -989,7 +967,6 @@ nav ul li a:hover {
   display: none;
 }
 
-/* Booking Success/Error Styles */
 .booking-success {
   text-align: center;
   padding: 40px 30px;
@@ -1190,7 +1167,6 @@ nav ul li a:hover {
   transform: translateY(-2px);
 }
 
-/* Services Section */
 #services {
     padding: 60px 20px;
     background: #111;
@@ -1237,7 +1213,6 @@ nav ul li a:hover {
     line-height: 1.6;
 }
 
-/* Contact Section */
 #contact {
   padding: 60px 20px;
   background: #111;
@@ -1312,7 +1287,6 @@ nav ul li a:hover {
   line-height: 1.5;
 }
 
-/* Footer */
 footer {
     background: #222;
     color: #fff;
@@ -1367,8 +1341,49 @@ footer {
     font-size: 14px;
     background: #111;
 }
+.detail-item h3 {
+    color: #34495e;
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+}
+.social-links {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+.social-link {
+    width: 40px;
+    height: 40px;
+    background: aliceblue;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #34495e;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+.social-link:hover {
+    background: #34495e;
+    color: white;
+    transform: translateY(-3px);
+}
+.social-link svg {
+    width: 20px;
+    height: 20px;
+}
 
-/* Media Queries */
+@keyframes pulse {
+  0% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.05); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes subtle-pulse {
+  0%, 100% { box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
+  50% { box-shadow: 0 4px 20px rgba(255, 153, 0, 0.3); }
+}
+
 @media (max-width: 992px) {
     .booking-btn {
         grid-column: 1 / -1;
