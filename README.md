@@ -18,6 +18,16 @@ Administrators can manage buses, routes, ticket data, and passengers from a cent
 
 ---
 
+## 🧠 Project Meta
+
+   **Project Name:** Khwekhwelele  
+   **Version:** 1.0.0  
+   **Developer:** Vessel (Anaclet Magombo)  
+   **Languages/Tools:** PHP, MySQL, HTML, CSS, JavaScript, Bootstrap  
+   **Purpose:** To provide a digital ticketing system that improves transparency and efficiency for public transport operators in Malawi.  
+   **License:** MIT License  
+   **GitHub Repository:** [https://github.com/Vessel-10/khwekhwelele]
+
 ## 🧩 Features
 
 - 🔐 **User Authentication** – Secure login and registration.  
