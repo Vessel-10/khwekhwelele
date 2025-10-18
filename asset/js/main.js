@@ -91,10 +91,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Modal Management
   function showModal(modal) {
     modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    document.body.style.overflow = 'hidden'; 
     setTimeout(() => {
       modal.classList.add('show');
     }, 10);
@@ -102,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function hideModal(modal) {
     modal.classList.remove('show');
-    document.body.style.overflow = 'auto'; // Restore scrolling
+    document.body.style.overflow = 'auto'; 
     setTimeout(() => {
       modal.style.display = 'none';
     }, 300);
@@ -120,7 +119,6 @@ document.addEventListener("DOMContentLoaded", () => {
     hideModal(bookingModal);
   }
 
-  // Bus Search Functionality
   bookingForm.addEventListener('submit', function(e) {
     e.preventDefault();
 
@@ -129,10 +127,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const destination = document.getElementById('destination').value.trim();
     const date = document.getElementById('date').value;
 
-    // Handle Flatpickr date format
     let formattedDate = date;
     if (date && date.includes(',')) {
-      // Convert "September 27, 2025" to "2025-09-27"
       const dateObj = new Date(date);
       formattedDate = dateObj.getFullYear() + '-' + 
                      String(dateObj.getMonth() + 1).padStart(2, '0') + '-' + 
@@ -143,13 +139,11 @@ document.addEventListener("DOMContentLoaded", () => {
     formData.append('destination', destination);
     formData.append('date', formattedDate);
 
-    // Validation
     if (!origin || !destination || !formattedDate) {
       showNotification('Please fill in all fields', 'error');
       return;
     }
 
-    // Validate date is not in the past
     const selectedDate = new Date(formattedDate);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -159,10 +153,8 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Store search info
     searchInfo = { origin, destination, date: formattedDate };
 
-    // Show loading
     modalBody.innerHTML = '<div class="loading">🔍 Searching for available buses...</div>';
     showModal(busModal);
 
@@ -256,7 +248,6 @@ document.addEventListener("DOMContentLoaded", () => {
     
     modalBody.innerHTML = html;
     
-    // Add event listeners to book buttons
     modalBody.querySelectorAll('.book-btn:not([disabled])').forEach(button => {
       button.addEventListener('click', function() {
         const scheduleId = this.getAttribute('data-schedule');
@@ -307,7 +298,6 @@ document.addEventListener("DOMContentLoaded", () => {
     confirmModalBody.innerHTML = html;
     showModal(confirmModal);
 
-    // Add event listeners
     confirmModalBody.querySelector('.btn-cancel').addEventListener('click', closeConfirmModalHandler);
     confirmModalBody.querySelector('.btn-proceed').addEventListener('click', proceedToBooking);
   }
@@ -387,13 +377,10 @@ document.addEventListener("DOMContentLoaded", () => {
     bookingModalBody.innerHTML = html;
     showModal(bookingModal);
     
-    // Add event listeners
     bookingModalBody.querySelector('.btn-cancel').addEventListener('click', closeBookingModalHandler);
     
-    // Setup price calculation
     setupPriceCalculation();
     
-    // Setup form submission
     setupBookingFormSubmission();
   }
 
@@ -428,7 +415,6 @@ document.addEventListener("DOMContentLoaded", () => {
     passengerTypeSelect.addEventListener('change', updatePrice);
     numSeatsInput.addEventListener('input', updatePrice);
     
-    // Initial calculation
     updatePrice();
   }
 
@@ -441,7 +427,6 @@ document.addEventListener("DOMContentLoaded", () => {
     form.addEventListener('submit', function(e) {
       e.preventDefault();
       
-      // Disable submit button
       submitBtn.disabled = true;
       btnText.style.display = 'none';
       btnLoader.style.display = 'inline';
@@ -465,7 +450,7 @@ document.addEventListener("DOMContentLoaded", () => {
         displayBookingError('Unable to process booking. Please try again.');
       })
       .finally(() => {
-        // Re-enable submit button
+      
         submitBtn.disabled = false;
         btnText.style.display = 'inline';
         btnLoader.style.display = 'none';
@@ -538,10 +523,8 @@ document.addEventListener("DOMContentLoaded", () => {
     
     bookingModalBody.innerHTML = html;
     
-    // Add close button functionality
     bookingModalBody.querySelector('.btn-close').addEventListener('click', closeAllModals);
     
-    // Show success notification
     showNotification('Booking created successfully!', 'success');
   }
 
@@ -566,7 +549,6 @@ document.addEventListener("DOMContentLoaded", () => {
     showNotification(message, 'error');
   }
 
-  // Utility Functions
   function formatTime(timeString) {
     const time = new Date(`2000-01-01T${timeString}`);
     return time.toLocaleTimeString('en-US', { 
@@ -587,7 +569,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function showNotification(message, type = 'info') {
-    // Remove existing notifications
     const existingNotification = document.querySelector('.notification');
     if (existingNotification) {
       existingNotification.remove();
@@ -602,19 +583,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.body.appendChild(notification);
 
-    // Auto remove after 5 seconds
     setTimeout(() => {
       if (notification.parentNode) {
         notification.remove();
       }
     }, 5000);
 
-    // Manual close
     notification.querySelector('.notification-close').addEventListener('click', () => {
       notification.remove();
     });
 
-    // Show animation
     setTimeout(() => {
       notification.classList.add('show');
     }, 100);
@@ -654,7 +632,6 @@ document.addEventListener("DOMContentLoaded", () => {
     printWindow.print();
   }
 
-  // Event Listeners for Modal Close Buttons
   if (closeBusModal) {
     closeBusModal.addEventListener('click', closeBusModalHandler);
   }
@@ -667,7 +644,6 @@ document.addEventListener("DOMContentLoaded", () => {
     closeBookingModal.addEventListener('click', closeBookingModalHandler);
   }
 
-  // Close modal when clicking outside
   window.addEventListener('click', (e) => {
     if (e.target === busModal) {
       closeBusModalHandler();
@@ -680,7 +656,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Close modals on Escape key
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       if (bookingModal.style.display === 'flex') {
@@ -693,7 +668,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Make functions globally available for onclick handlers
   window.closeConfirmModalHandler = closeConfirmModalHandler;
   window.closeBookingModalHandler = closeBookingModalHandler;
   window.closeBusModalHandler = closeBusModalHandler;
@@ -701,7 +675,6 @@ document.addEventListener("DOMContentLoaded", () => {
   window.closeAllModals = closeAllModals;
   window.printBookingDetails = printBookingDetails;
 
-  // Mobile menu toggle
   const mobileMenu = document.querySelector('.mobile-menu');
   const navLinks = document.querySelector('.nav-links');
   
