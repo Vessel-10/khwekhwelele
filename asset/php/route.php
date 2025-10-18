@@ -15,7 +15,6 @@ try {
 
     $routes = [];
     while ($row = $result->fetch_assoc()) {
-        // Format the prices properly
         $row['single_adult'] = number_format($row['single_adult'], 0);
         $row['single_child'] = number_format($row['single_child'], 0);
         $row['return_adult'] = number_format($row['return_adult'], 0);
